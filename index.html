@@ -2,49 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CAF PRO - Community Awareness Forum</title>
+<title>Community Awareness Forum (CAF)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- QR Code library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<!-- Firebase CDN -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
-
 <style>
-:root{
-  --main:#0b5394;
-  --accent:#f1c232;
-  --bg:#f4f6f8;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Segoe UI,Arial;background:var(--bg)}
-header{background:var(--main);color:#fff;padding:20px;text-align:center;position:relative}
-header img.logo{height:70px;position:absolute;top:10px;left:20px}
-nav{background:#fff;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px}
-nav button{background:var(--main);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer}
-section{background:#fff;margin:15px;padding:20px;border-radius:12px}
-h2{color:var(--main)}
-input,select,textarea,button{width:100%;padding:8px;margin:6px 0}
-button{background:var(--main);color:#fff;border:none;border-radius:6px;cursor:pointer}
+body{font-family:Arial;margin:0;background:#f4f6f8}
+header{background:#0b5394;color:#fff;padding:15px;text-align:center}
+section{background:#fff;margin:15px;padding:15px;border-radius:8px}
+h2{color:#0b5394}
+input,button,textarea{width:100%;padding:8px;margin:5px 0}
+button{background:#0b5394;color:#fff;border:none;border-radius:5px;cursor:pointer}
+button:hover{opacity:.9}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ccc;padding:8px;text-align:left}
+.id-card{width:300px;border:2px solid #0b5394;border-radius:10px;padding:10px;text-align:center;margin:10px auto}
+.id-card h3{margin:5px 0;color:#0b5394}
 .hidden{display:none}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #ccc;padding:8px;text-align:center}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.gallery div{background:#ddd;height:100px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.id-card{width:320px;border:2px solid var(--main);border-radius:12px;padding:12px;text-align:center;margin:auto;position:relative}
-.id-card img.passport{width:90px;height:90px;border-radius:50%;object-fit:cover;margin-top:10px}
-.id-card img.logo{width:50px;height:50px;position:absolute;top:10px;left:10px}
-.qrcode{margin:10px auto}
-footer{background:#111;color:#fff;text-align:center;padding:15px}
 
 @media print{
   body *{visibility:hidden}
-  .printable,.printable *{visibility:visible}
-  .printable{position:absolute;top:20px;left:0;right:0}
+  .id-card,.id-card *{visibility:visible}
+  .id-card{position:absolute;left:0;right:0;top:20px}
 }
 </style>
 </head>
@@ -52,86 +30,53 @@ footer{background:#111;color:#fff;text-align:center;padding:15px}
 <body>
 
 <header>
-<img src="caf-logo.png" alt="CAF LOGO" class="logo">
 <h1>COMMUNITY AWARENESS FORUM (CAF)</h1>
-<p><strong>Motto:</strong> Educate, Aware and Better Community</p>
 </header>
 
-<nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('register')">Register</button>
-<button onclick="show('login')">Login</button>
-<button onclick="logout()">Logout</button>
-<button onclick="show('adminDashboard')">Admin</button>
-</nav>
-
-<!-- HOME -->
-<section id="home">
-<h2>Welcome Message</h2>
-<p><strong>Admin:</strong> Welcome to CAF. Together we educate, create awareness and build a better community.</p>
-<h2>Mission</h2>
-<p>To educate and raise awareness that strengthens communities socially and morally.</p>
-<h2>Vision</h2>
-<p>A peaceful, informed and progressive community.</p>
-</section>
-
-<!-- REGISTER -->
-<section id="register" class="hidden printable">
-<h2>Membership Registration</h2>
-<input id="rName" placeholder="Full Name">
-<input id="rEmail" placeholder="Email Address">
-<input id="rPhone" placeholder="Phone Number">
-<select id="rGender">
-  <option value="">Gender</option>
-  <option>Male</option>
-  <option>Female</option>
-</select>
-<input type="file" id="rPhoto" accept="image/*">
-<input type="password" id="rPass" placeholder="Create Password">
-<button onclick="register()">Submit Registration</button>
-<button onclick="window.print()">Print Registration Form</button>
-</section>
-
 <!-- LOGIN -->
-<section id="login" class="hidden">
+<section id="loginSection">
 <h2>Login</h2>
-<input id="lUser" placeholder="Email / Username">
-<input id="lPass" type="password" placeholder="Password">
+<input id="loginEmail" placeholder="Username">
+<input id="loginPassword" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
 </section>
 
+<!-- LOGOUT -->
+<section id="logoutSection" class="hidden">
+<button onclick="logout()">Logout</button>
+</section>
+
+<!-- REGISTER -->
+<section id="registerSection">
+<h2>Member Registration</h2>
+<input id="regName" placeholder="Full Name">
+<input id="regEmail" placeholder="Username">
+<input id="regPassword" type="password" placeholder="Password">
+<button onclick="register()">Register</button>
+</section>
+
+<!-- PENDING APPROVAL -->
+<section id="pendingSection" class="hidden">
+<h2>Pending Members (Admin)</h2>
+<table id="pendingTable"></table>
+</section>
+
+<!-- MEMBERS -->
+<section id="membersSection" class="hidden">
+<h2>Approved Members (Admin)</h2>
+<table id="memberTable"></table>
+</section>
+
 <!-- ID CARD -->
-<section id="idSection" class="hidden printable">
+<section id="idSection" class="hidden">
 <h2>My ID Card</h2>
-<div class="id-card">
-<img src="caf-logo.png" class="logo">
-<img id="idPhoto" class="passport">
-<h3>CAF MEMBER</h3>
+<div class="id-card" id="idCard">
+<h3>CAF MEMBER ID</h3>
 <p><strong>Name:</strong> <span id="idName"></span></p>
-<p><strong>ID No:</strong> <span id="idNo"></span></p>
-<p><strong>Email:</strong> <span id="idEmail"></span></p>
-<div class="qrcode" id="idQR"></div>
-<p>Status: Active</p>
+<p><strong>Username:</strong> <span id="idEmail"></span></p>
+<p><strong>Status:</strong> Active Member</p>
 </div>
 <button onclick="window.print()">Print ID Card</button>
-</section>
-
-<!-- ADMIN DASHBOARD -->
-<section id="adminDashboard" class="hidden">
-<h2>Attendance Dashboard (Admin)</h2>
-<table id="attendanceTable"></table>
-<button onclick="printAttendance()">Print Attendance</button>
-</section>
-
-<!-- GALLERY -->
-<section>
-<h2>CAF Gallery</h2>
-<div class="gallery">
-<div>Outreach</div>
-<div>Workshop</div>
-<div>Meeting</div>
-<div>Community Event</div>
-</div>
 </section>
 
 <!-- CONTACT -->
@@ -143,109 +88,131 @@ footer{background:#111;color:#fff;text-align:center;padding:15px}
 <p>Phone: 08122280304</p>
 </section>
 
-<footer>
-<p>&copy; 2026 Community Awareness Forum</p>
-</footer>
-
 <script>
-// ===== FIREBASE CONFIG & INIT =====
-const firebaseConfig = {
-  apiKey: "AIzaSyDemz9IyR9y4K1nOlVpujhPDhEAyxronRA",
-  authDomain: "caf-e3741.firebaseapp.com",
-  projectId: "caf-e3741",
-  storageBucket: "caf-e3741.firebasestorage.app",
-  messagingSenderId: "210831855488",
-  appId: "1:210831855488:web:60f7ec8f8b275df68fbb65",
-  measurementId: "G-8HBLT3X9Z9"
+/* ===== ADMIN ===== */
+const adminAccount={
+  email:"caf1234",
+  password:"Caf1234",
+  role:"admin"
 };
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
+/* ===== DATA ===== */
+let members=[];
+let pendingMembers=[];
+let currentUser=null;
+let currentUserType=null;
 
-// ===== REGISTER =====
-async function register(){
-  const name = rName.value;
-  const email = rEmail.value;
-  const phone = rPhone.value;
-  const gender = rGender.value;
-  const pass = rPass.value;
-  const photo = rPhoto.files[0];
-  if(!name||!email||!pass||!photo){alert("All fields required");return;}
+/* ===== LOGIN ===== */
+function login(){
+  const e=loginEmail.value.trim();
+  const p=loginPassword.value.trim();
 
-  const userCred = await auth.createUserWithEmailAndPassword(email, pass);
-  const uid = userCred.user.uid;
+  if(!e||!p){alert("Fill all fields");return;}
 
-  const photoRef = storage.ref("passports/"+uid);
-  await photoRef.put(photo);
-  const photoURL = await photoRef.getDownloadURL();
+  if(e===adminAccount.email && p===adminAccount.password){
+    currentUser=adminAccount;
+    currentUserType="admin";
+    afterLogin();
+    alert("Admin login successful");
+    return;
+  }
 
-  const idNumber = "CAF-"+new Date().getFullYear()+"-"+uid.slice(0,6);
+  const m=members.find(x=>x.email===e && x.password===p);
+  if(m){
+    currentUser=m;
+    currentUserType="member";
+    afterLogin();
+    showIDCard();
+    alert("Member login successful");
+    return;
+  }
 
-  await db.collection("members").doc(uid).set({
-    name,email,phone,gender,photoURL,idNumber,createdAt:new Date()
+  alert("Invalid credentials");
+}
+
+/* ===== LOGOUT ===== */
+function logout(){
+  currentUser=null;
+  currentUserType=null;
+  location.reload();
+}
+
+/* ===== AFTER LOGIN ===== */
+function afterLogin(){
+  loginSection.classList.add("hidden");
+  logoutSection.classList.remove("hidden");
+
+  if(currentUserType==="admin"){
+    pendingSection.classList.remove("hidden");
+    membersSection.classList.remove("hidden");
+    updatePendingTable();
+    updateMemberTable();
+  }
+}
+
+/* ===== REGISTER ===== */
+function register(){
+  if(!regName.value||!regEmail.value||!regPassword.value){
+    alert("All fields required");return;
+  }
+  pendingMembers.push({
+    fullname:regName.value,
+    email:regEmail.value,
+    password:regPassword.value
   });
-
-  alert("Registration successful. You can now login.");
+  alert("Registration submitted. Await approval.");
+  regName.value=regEmail.value=regPassword.value="";
 }
 
-// ===== LOGIN =====
-async function login(){
-  const email = lUser.value;
-  const pass = lPass.value;
-  try{
-    const userCred = await auth.signInWithEmailAndPassword(email, pass);
-    const uid = userCred.user.uid;
-    const snap = await db.collection("members").doc(uid).get();
-    const m = snap.data();
-
-    show("idSection");
-    idName.innerText = m.name;
-    idEmail.innerText = m.email;
-    idNo.innerText = m.idNumber;
-    idPhoto.src = m.photoURL;
-
-    new QRCode(document.getElementById("idQR"), {
-      text: m.idNumber + " - " + m.name,
-      width: 100,
-      height: 100
-    });
-
-  } catch(e){alert("Invalid login")}
-}
-
-// ===== LOGOUT =====
-function logout(){location.reload();}
-
-// ===== ATTENDANCE =====
-async function printAttendance(){
-  const table = document.getElementById("attendanceTable");
-  table.innerHTML="<tr><th>Name</th><th>ID No</th><th>Mark Present</th></tr>";
-  const membersSnap = await db.collection("members").get();
-  membersSnap.forEach(docSnap=>{
-    const m = docSnap.data();
-    const r = table.insertRow();
-    r.insertCell(0).innerText=m.name;
-    r.insertCell(1).innerText=m.idNumber;
-    const btn = document.createElement("button");
-    btn.innerText="Present";
-    btn.onclick = ()=>{alert(m.name + " marked present")}
-    r.insertCell(2).appendChild(btn);
+/* ===== APPROVE ===== */
+function updatePendingTable(){
+  pendingTable.innerHTML="<tr><th>Name</th><th>Username</th><th>Action</th></tr>";
+  pendingMembers.forEach((m,i)=>{
+    let r=pendingTable.insertRow();
+    r.insertCell(0).innerText=m.fullname;
+    r.insertCell(1).innerText=m.email;
+    let b=document.createElement("button");
+    b.innerText="Approve";
+    b.onclick=()=>approveMember(i);
+    r.insertCell(2).appendChild(b);
   });
-  window.print();
 }
 
-// ===== CONTACT =====
+function approveMember(i){
+  members.push(pendingMembers[i]);
+  pendingMembers.splice(i,1);
+  updatePendingTable();
+  updateMemberTable();
+}
+
+/* ===== MEMBERS ===== */
+function updateMemberTable(){
+  memberTable.innerHTML="<tr><th>Name</th><th>Username</th><th>Remove</th></tr>";
+  members.forEach((m,i)=>{
+    let r=memberTable.insertRow();
+    r.insertCell(0).innerText=m.fullname;
+    r.insertCell(1).innerText=m.email;
+    let b=document.createElement("button");
+    b.innerText="Remove";
+    b.onclick=()=>{members.splice(i,1);updateMemberTable();}
+    r.insertCell(2).appendChild(b);
+  });
+}
+
+/* ===== ID CARD ===== */
+function showIDCard(){
+  idSection.classList.remove("hidden");
+  idName.innerText=currentUser.fullname;
+  idEmail.innerText=currentUser.email;
+}
+
+/* ===== CONTACT ===== */
 function submitContact(){
-  if(!contactMessage.value.trim()) return alert("Enter message");
-  alert("Message sent successfully");contactMessage.value="";
-}
-
-// ===== SHOW SECTION =====
-function show(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+  if(!contactMessage.value.trim()){
+    alert("Enter message");return;
+  }
+  alert("Message sent. Thank you!");
+  contactMessage.value="";
 }
 </script>
 
