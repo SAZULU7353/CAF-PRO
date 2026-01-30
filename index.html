@@ -22,8 +22,8 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Segoe UI,Arial;background:var(--bg)}
-header{background:var(--main);color:#fff;padding:20px;text-align:center}
-header img{height:70px}
+header{background:var(--main);color:#fff;padding:20px;text-align:center;position:relative}
+header img.logo{height:70px;position:absolute;top:10px;left:20px}
 nav{background:#fff;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px}
 nav button{background:var(--main);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer}
 section{background:#fff;margin:15px;padding:20px;border-radius:12px}
@@ -35,8 +35,9 @@ table{width:100%;border-collapse:collapse}
 th,td{border:1px solid #ccc;padding:8px;text-align:center}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
 .gallery div{background:#ddd;height:100px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.id-card{width:320px;border:2px solid var(--main);border-radius:12px;padding:12px;text-align:center;margin:auto}
-.id-card img{width:90px;height:90px;border-radius:50%;object-fit:cover}
+.id-card{width:320px;border:2px solid var(--main);border-radius:12px;padding:12px;text-align:center;margin:auto;position:relative}
+.id-card img.passport{width:90px;height:90px;border-radius:50%;object-fit:cover;margin-top:10px}
+.id-card img.logo{width:50px;height:50px;position:absolute;top:10px;left:10px}
 .qrcode{margin:10px auto}
 footer{background:#111;color:#fff;text-align:center;padding:15px}
 
@@ -51,7 +52,7 @@ footer{background:#111;color:#fff;text-align:center;padding:15px}
 <body>
 
 <header>
-<img src="" alt="CAF LOGO">
+<img src="caf-logo.png" alt="CAF LOGO" class="logo">
 <h1>COMMUNITY AWARENESS FORUM (CAF)</h1>
 <p><strong>Motto:</strong> Educate, Aware and Better Community</p>
 </header>
@@ -103,7 +104,8 @@ footer{background:#111;color:#fff;text-align:center;padding:15px}
 <section id="idSection" class="hidden printable">
 <h2>My ID Card</h2>
 <div class="id-card">
-<img id="idPhoto">
+<img src="caf-logo.png" class="logo">
+<img id="idPhoto" class="passport">
 <h3>CAF MEMBER</h3>
 <p><strong>Name:</strong> <span id="idName"></span></p>
 <p><strong>ID No:</strong> <span id="idNo"></span></p>
