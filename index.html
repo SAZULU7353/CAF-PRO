@@ -1,214 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Awareness Forum (CAF)</title>
-    <style>
-        :root {
-            --primary-color: #1565c0;
-            --secondary-color: #ef6c00;
-            --danger-color: #c62828;
-            --success-color: #2e7d32;
-            --light-bg: #f9f9f9;
-            --dark-text: #333;
-        }
+<meta charset="UTF-8">
+<title>CAF PRO - Community Awareness Forum</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--light-bg);
-            color: var(--dark-text);
-        }
+<!-- QR Code library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
+<style>
+:root{
+  --main:#0b5394;
+  --accent:#f1c232;
+  --bg:#f4f6f8;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI,Arial;background:var(--bg)}
+header{background:var(--main);color:#fff;padding:20px;text-align:center}
+header img{height:70px}
+nav{background:#fff;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:10px}
+nav button{background:var(--main);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer}
+section{background:#fff;margin:15px;padding:20px;border-radius:12px}
+h2{color:var(--main)}
+input,select,textarea,button{width:100%;padding:8px;margin:6px 0}
+button{background:var(--main);color:#fff;border:none;border-radius:6px}
+.hidden{display:none}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ccc;padding:8px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.gallery div{background:#ddd;height:100px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.id-card{width:320px;border:2px solid var(--main);border-radius:12px;padding:12px;text-align:center;margin:auto}
+.id-card img{width:90px;height:90px;border-radius:50%;object-fit:cover}
+.qrcode{margin:10px auto}
+footer{background:#111;color:#fff;text-align:center;padding:15px}
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            background: #e3f2fd;
-            padding: 0.5rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        main {
-            padding: 2rem;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        h2 {
-            color: var(--primary-color);
-        }
-
-        form {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        form input, form select, form textarea {
-            width: 100%;
-            padding: 0.5rem;
-            margin: 0.5rem 0 1rem 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        form button {
-            padding: 0.7rem 1.2rem;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .pending-approval {
-            background: #fff3e0;
-            border-left: 5px solid var(--secondary-color);
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .approved {
-            background: #e8f5e9;
-            border-left: 5px solid var(--success-color);
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        footer {
-            background: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-
-        .id-card {
-            border: 1px solid #ccc;
-            padding: 1rem;
-            width: 250px;
-            text-align: center;
-            margin: 1rem 0;
-            border-radius: 10px;
-            background: white;
-        }
-
-        .contact-info {
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .terms {
-            margin-bottom: 1rem;
-        }
-    </style>
+@media print{
+  body *{visibility:hidden}
+  .printable,.printable *{visibility:visible}
+  .printable{position:absolute;top:20px;left:0;right:0}
+}
+</style>
 </head>
+
 <body>
-    <header>
-        <h1>Community Awareness Forum (CAF)</h1>
-    </header>
 
-    <nav>
-        <a href="#register">Register</a>
-        <a href="#login">Login</a>
-        <a href="#pending">Pending Approval</a>
-        <a href="#contact">Contact</a>
-    </nav>
+<header>
+<img src="" alt="CAF LOGO">
+<h1>COMMUNITY AWARENESS FORUM (CAF)</h1>
+<p><strong>Motto:</strong> Educate, Aware and Better Community</p>
+</header>
 
-    <main>
-        <!-- Registration Form -->
-        <section id="register">
-            <h2>Member Registration</h2>
-            <form>
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" required>
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('register')">Register</button>
+<button onclick="show('login')">Login</button>
+<button onclick="logout()">Logout</button>
+<button onclick="show('adminDashboard')">Admin</button>
+</nav>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+<!-- HOME -->
+<section id="home">
+<h2>Welcome Message</h2>
+<p><strong>Admin:</strong> Welcome to CAF. Together we educate, create awareness and build a better community.</p>
+<h2>Mission</h2>
+<p>To educate and raise awareness that strengthens communities socially and morally.</p>
+<h2>Vision</h2>
+<p>A peaceful, informed and progressive community.</p>
+</section>
 
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
+<!-- REGISTER -->
+<section id="register" class="hidden printable">
+<h2>Membership Registration</h2>
+<input id="rName" placeholder="Full Name">
+<input id="rEmail" placeholder="Email Address">
+<input id="rPhone" placeholder="Phone Number">
+<select id="rGender">
+  <option value="">Gender</option>
+  <option>Male</option>
+  <option>Female</option>
+</select>
+<input type="file" id="rPhoto" accept="image/*">
+<input type="password" id="rPass" placeholder="Create Password">
+<button onclick="register()">Submit Registration</button>
+<button onclick="window.print()">Print Registration Form</button>
+</section>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+<!-- LOGIN -->
+<section id="login" class="hidden">
+<h2>Login</h2>
+<input id="lUser" placeholder="Email / Username">
+<input id="lPass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</section>
 
-                <label for="agreement" class="terms">
-                    <input type="checkbox" id="agreement" required> I agree to the <a href="#terms">terms and policies</a>
-                </label>
+<!-- ID CARD -->
+<section id="idSection" class="hidden printable">
+<h2>My ID Card</h2>
+<div class="id-card">
+<img id="idPhoto">
+<h3>CAF MEMBER</h3>
+<p><strong>Name:</strong> <span id="idName"></span></p>
+<p><strong>ID No:</strong> <span id="idNo"></span></p>
+<p><strong>Email:</strong> <span id="idEmail"></span></p>
+<div class="qrcode" id="idQR"></div>
+<p>Status: Active</p>
+</div>
+<button onclick="window.print()">Print ID Card</button>
+</section>
 
-                <button type="submit">Register</button>
-            </form>
-        </section>
+<!-- ADMIN DASHBOARD -->
+<section id="adminDashboard" class="hidden">
+<h2>Attendance Dashboard (Admin)</h2>
+<table id="attendanceTable"></table>
+<button onclick="printAttendance()">Print Attendance</button>
+</section>
 
-        <!-- Login Form -->
-        <section id="login">
-            <h2>Member Login</h2>
-            <form>
-                <label for="login-email">Email:</label>
-                <input type="email" id="login-email" name="login-email" required>
+<!-- GALLERY -->
+<section>
+<h2>CAF Gallery</h2>
+<div class="gallery">
+<div>Outreach</div>
+<div>Workshop</div>
+<div>Meeting</div>
+<div>Community Event</div>
+</div>
+</section>
 
-                <label for="login-password">Password:</label>
-                <input type="password" id="login-password" name="login-password" required>
+<!-- CONTACT -->
+<section>
+<h2>Contact Us</h2>
+<textarea id="contactMessage" placeholder="Your message"></textarea>
+<button onclick="submitContact()">Send Message</button>
+<p>Email: communityawarenessforum1234@gmail.com</p>
+<p>Phone: 08122280304</p>
+</section>
 
-                <button type="submit">Login</button>
-            </form>
-        </section>
+<footer>
+<p>&copy; 2026 Community Awareness Forum</p>
+</footer>
 
-        <!-- Pending Approval Section -->
-        <section id="pending">
-            <h2>Pending Member Approvals</h2>
-            <div class="pending-approval">
-                <p><strong>John Doe</strong> - Waiting for admin approval</p>
-            </div>
-            <div class="pending-approval">
-                <p><strong>Jane Smith</strong> - Waiting for admin approval</p>
-            </div>
-        </section>
+<script type="module">
+// ===== FIREBASE CONFIG (PLACEHOLDERS) =====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import QRCode from "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
 
-        <!-- Approved Members Section -->
-        <section id="approved">
-            <h2>Approved Members</h2>
-            <div class="approved">
-                <p><strong>Mary Johnson</strong></p>
-                <div class="id-card">
-                    <h3>CAF Member ID</h3>
-                    <p>Name: Mary Johnson</p>
-                    <p>ID: CAF2025-001</p>
-                </div>
-            </div>
-        </section>
+// 🔑 REPLACE WITH YOUR FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
+};
 
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <div class="contact-info">
-                <p>Email: <a href="mailto:communityawarenessforum1234@gmail.com">communityawarenessforum1234@gmail.com</a></p>
-                <p>Phone: 08122280304</p>
-                <p>All rights reserved &copy; 2025 Community Awareness Forum</p>
-            </div>
-        </section>
-    </main>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-    <footer>
-        <p>Community Awareness Forum &copy; 2025</p>
-    </footer>
+// ===== REGISTER =====
+window.register = async function(){
+  const name = rName.value;
+  const email = rEmail.value;
+  const phone = rPhone.value;
+  const gender = rGender.value;
+  const pass = rPass.value;
+  const photo = rPhoto.files[0];
+  if(!name||!email||!pass||!photo){alert("All fields required");return;}
+
+  const userCred = await createUserWithEmailAndPassword(auth,email,pass);
+  const uid = userCred.user.uid;
+
+  const photoRef = ref(storage,"passports/"+uid);
+  await uploadBytes(photoRef,photo);
+  const photoURL = await getDownloadURL(photoRef);
+
+  const idNumber = "CAF-"+new Date().getFullYear()+"-"+uid.slice(0,6);
+
+  await setDoc(doc(db,"members",uid),{
+    name,email,phone,gender,photoURL,idNumber,createdAt:new Date()
+  });
+
+  alert("Registration successful. You can now login.");
+};
+
+// ===== LOGIN =====
+window.login = async function(){
+  const email = lUser.value;
+  const pass = lPass.value;
+  try{
+    const userCred = await signInWithEmailAndPassword(auth,email,pass);
+    const uid = userCred.user.uid;
+    const snap = await getDoc(doc(db,"members",uid));
+    const m = snap.data();
+
+    show("idSection");
+    idName.innerText = m.name;
+    idEmail.innerText = m.email;
+    idNo.innerText = m.idNumber;
+    idPhoto.src = m.photoURL;
+
+    new QRCode(document.getElementById("idQR"), {
+      text: m.idNumber + " - " + m.name,
+      width: 100,
+      height: 100
+    });
+
+  } catch(e){alert("Invalid login")}
+};
+
+// ===== LOGOUT =====
+function logout(){location.reload();}
+
+// ===== ATTENDANCE =====
+async function printAttendance(){
+  // Admin view only
+  const table = document.getElementById("attendanceTable");
+  table.innerHTML="<tr><th>Name</th><th>ID No</th><th>Mark Present</th></tr>";
+  const membersSnap = await getDocs(collection(db,"members"));
+  membersSnap.forEach(docSnap=>{
+    const m = docSnap.data();
+    const r = table.insertRow();
+    r.insertCell(0).innerText=m.name;
+    r.insertCell(1).innerText=m.idNumber;
+    const btn = document.createElement("button");
+    btn.innerText="Present";
+    btn.onclick = ()=>{alert(m.name + " marked present")}
+    r.insertCell(2).appendChild(btn);
+  });
+  window.print();
+}
+
+// ===== CONTACT =====
+function submitContact(){
+  if(!contactMessage.value.trim()) return alert("Enter message");
+  alert("Message sent successfully");contactMessage.value="";
+}
+
+// ===== SHOW SECTION =====
+function show(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+</script>
+
 </body>
 </html>
